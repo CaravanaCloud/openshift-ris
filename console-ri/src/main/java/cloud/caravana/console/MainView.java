@@ -1,4 +1,4 @@
-package com.example.starter.base;
+package cloud.caravana.console;
 
 import javax.inject.Inject;
 
@@ -11,20 +11,24 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
-import cloud.caravana.auth.UserSession;
+import cloud.caravana.auth.ClientSession;
 
 @Route("")
 public class MainView extends VerticalLayout {
     @Inject
     public MainView(
-        UserSession session, 
+        ClientSession session, 
         GreetService greetService) {
         
-        if (session!= null && session.isLoggedIn()){
+        if (session != null 
+            && session.isLoggedIn()){
             add(new Label("Hello " + session.getUserInfo()));
         }else {
-            add(new Label("Not authenticated"));
+            add(new Label("Hello stranger ;)"));
         }
+
+        add(new Label("Ping (rest client)? " + session.ping()) );
+
 
         // Use TextField for standard text input
         TextField textField = new TextField("Your name");

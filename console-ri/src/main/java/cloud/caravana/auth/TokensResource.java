@@ -1,4 +1,4 @@
-package cloud.caravana;
+package cloud.caravana.auth;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
