@@ -19,20 +19,10 @@ public class WhoAmIResource {
     @Path("/whoami")
     @RolesAllowed("user")
     @NoCache
-    public User me() {
-        return new User(securityIdentity);
+    public String getWhoAmI() {
+        return securityIdentity
+            .getPrincipal()
+            .getName();
     }
 
-    public static class User {
-
-        private final String userName;
-
-        User(SecurityIdentity securityIdentity) {
-            this.userName = securityIdentity.getPrincipal().getName();
-        }
-
-        public String getUserName() {
-            return userName;
-        }
-    }
 }

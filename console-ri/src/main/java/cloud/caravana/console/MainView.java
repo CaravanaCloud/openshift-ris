@@ -20,14 +20,7 @@ public class MainView extends VerticalLayout {
         ClientSession session, 
         GreetService greetService) {
         
-        if (session != null 
-            && session.isLoggedIn()){
-            add(new Label("Hello " + session.getUserInfo()));
-        }else {
-            add(new Label("Hello stranger ;)"));
-        }
-
-        add(new Label("Ping (rest client)? " + session.ping()) );
+        add(new Label("Ping? " + session.ping()) );
 
 
         // Use TextField for standard text input

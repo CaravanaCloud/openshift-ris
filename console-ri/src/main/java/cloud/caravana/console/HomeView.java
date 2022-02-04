@@ -9,8 +9,10 @@ import javax.inject.Inject;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.Route;
@@ -33,7 +35,7 @@ public class HomeView extends AppLayout {
                 .set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 
-        Tabs tabs = getTabs();
+        Tabs tabs = getTabs(session);
 
         addToDrawer(tabs);
         addToNavbar(toggle, title);
@@ -48,11 +50,28 @@ public class HomeView extends AppLayout {
          */
     }
 
-    private Tabs getTabs() {
-        Tabs tabs = new Tabs();
+    private Tabs getTabs(ClientSession session) {
+        var tabs = new Tabs();
+
+
+        var tabDash = createTab(VaadinIcon.DASHBOARD, "Dashboard");
+        tabDash.getElement().addEventListener("click", event -> {
+          setContent(new VerticalLayout(){{
+            add(new Label("Graphics and stuff. Beep!"));
+          }});
+        });
+        
+
+        var tabTalk = createTab(VaadinIcon.PRESENTATION, "Submit a Talk!");
+        tabTalk.getElement().addEventListener("click", event -> {
+          setContent(new VerticalLayout(){{
+            add(new Label("Let's do this " + session.whoami()+" !"));
+          }});
+        });
+
         tabs.add(
-          createTab(VaadinIcon.PRESENTATION, "Submit a Talk!"),
-          createTab(VaadinIcon.DASHBOARD, "Dashboard"),
+          tabDash,
+          tabTalk,
           createTab(VaadinIcon.CART, "Orders"),
           createTab(VaadinIcon.USER_HEART, "Customers"),
           createTab(VaadinIcon.PACKAGE, "Products"),
